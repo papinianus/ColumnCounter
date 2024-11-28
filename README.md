@@ -13,3 +13,8 @@
   - in: book / sheetName
     - DB: host, database, table
   - out: book / sheetName
+
+## リポジトリの運用
+
+- feature/{issue no.} のブランチを作って pull req してください
+- issue に関係のないものはまぜないでください(.gitignore を足したい場合など issue を切ってから pull req してください)
