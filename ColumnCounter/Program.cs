@@ -4,41 +4,38 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var host = new Option<string>
-            (name: "--host",
-             description: "(Option)host");
-        host.AddAlias("-h");
-        var book = new Option<FileInfo>
-            (name: "--book",
-             description: "book")
+        var hostOption = new Option<string>
+            (aliases: ["--host", "-h"],
+             description: "共有フォルダのホスト名または IP アドレス");
+        var bookOption = new Option<FileInfo>
+            (aliases: ["--book", "-b"],
+             description: "Excel ファイルのフルパス")
         { IsRequired = true };
-        book.AddAlias("-b");
-        var sheet = new Option<string>
-            (name: "--sheet",
-             description: "sheet")
+        var sheetOption = new Option<string>
+            (aliases: ["--sheet", "-s"],
+             description: "シート名")
         { IsRequired = true };
-        sheet.AddAlias("-s");
-        var username = new Option<string>
-            (name: "--username",
-             description: "(Option)username");
-        username.AddAlias("-u");
-        var password = new Option<string>
-            (name: "--password",
-             description: "(Option)password");
-        password.AddAlias("-p");
+        var usernameOption = new Option<string>
+            (aliases: ["--username", "-u"],
+             description: "共有フォルダもしくはデータベースにアクセスする場合のユーザー名");
+        var passwordOption = new Option<string>
+            (aliases: ["--password", "-p"],
+             description: "共有フォルダもしくはデータベースにアクセスする場合のパスワード");
 
-        var rootCommand = new RootCommand();
-        rootCommand.Add(host);
-        rootCommand.Add(book);
-        rootCommand.Add(sheet);
-        rootCommand.Add(username);
-        rootCommand.Add(password);
+        var rootCommand = new RootCommand
+        {
+            hostOption,
+            bookOption,
+            sheetOption,
+            usernameOption,
+            passwordOption
+        };
 
         rootCommand.SetHandler((host, book, sheet, username, password) =>
         {
             Console.WriteLine($"-- = {host}");
         },
-            host, book, sheet, username, password);
+            hostOption, bookOption, sheetOption, usernameOption, passwordOption);
 
         await rootCommand.InvokeAsync(args);
     }
