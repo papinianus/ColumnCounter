@@ -2,8 +2,9 @@
 {
     internal interface IDataStore
     {
-        IEnumerable<string> LoadHeaders();
-        int CountColumn(string columnName);
-        IReadOnlyDictionary<string, int> CountColumns(IEnumerable<string> columnNames);
+        IEnumerable<string> GetTables();
+        IEnumerable<string> LoadHeaders(string tableName);
+        int CountColumn(string tableName, string columnName);
+        IReadOnlyDictionary<string, int> CountColumns(string tableName, IEnumerable<string> columnNames);
     }
 }
